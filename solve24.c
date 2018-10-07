@@ -1,6 +1,8 @@
 /* Library for solving the 24 game
  * Author: lem-ma (@Github)
+ * Version 1.0
  */
+
 #include <string.h>
 #include <stdio.h>
 
@@ -15,6 +17,7 @@ char* output(char *dest, char *answ, int mode)
      * (a ((b c) d))    d   c   b   op  op  a   op
      * (a (b (c d)))    d   c   op  b   op  a   op
      * that's all!
+     * need 20 bytes allocated to dest
      */
     switch(mode)
     {
@@ -77,12 +80,13 @@ int tryout(char *dest, char *token)
      * (a (b (c d)))    d   c   op  b   op  a   op
      * that's all!
      * only for <32 integers
+     * need 8 bytes allocated to dest
      */
     int cases[24][4]={
         {0,1,2,3},{0,1,3,2},{0,2,1,3},{0,2,3,1},{0,3,1,2},{0,3,2,1},
         {1,0,2,3},{1,0,3,2},{1,2,0,3},{1,2,3,0},{1,3,0,2},{1,3,2,0},
         {2,0,1,3},{2,0,3,1},{2,1,0,3},{2,1,3,0},{2,3,0,1},{2,3,1,0},
-        {3,0,1,2},{3,0,2,1},{3,1,0,2},{3,1,2,0},{3,2,0,1},{3,2,1,0},
+        {3,0,1,2},{3,0,2,1},{3,1,0,2},{3,1,2,0},{3,2,0,1},{3,2,1,0}
     };
     char ops[]="+-*/";
     char config[8];
