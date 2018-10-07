@@ -3,23 +3,25 @@
 
 #include "solve24.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    int tks[4],manual=1;
+    int manual=1;
     char pa[4],answer[8];
-    if(argc==5)
+    if(argc>4)
     {
         manual=0;
-        for(int i=0;i<4;i++) tks[i]=atoi(argv[i+1]);
+        for(int i=0;i<4;i++)
+            if((pa[i]=atoi(argv[i+1]))>31||pa[i]<1)
+                puts("Invalid input!"),exit(0);
     }
     if(manual)
     {
         puts("Please input the numbers (1--31), split with spaces.");
-        scanf("%d %d %d %d", tks, tks+1, tks+2, tks+3);
+        scanf("%hhd %hhd %hhd %hhd", pa, pa+1, pa+2, pa+3);
+        for(int i=0;i<4;i++)
+            if(pa[i]<1||pa[i]>31) puts("Invalid input!"),exit(1);
     }
-    for(int i=0;i<4;i++) (tks[i]>0&&tks[i]<32)?
-        (pa[i]=(char)tks[i]):(puts("Invalid input!"),exit(1));
-    printf("Inputs: %d, %d, %d, %d\n",tks[0],tks[1],tks[2],tks[3]);
+    printf("Inputs: %hhd, %hhd, %hhd, %hhd\n",pa[0],pa[1],pa[2],pa[3]);
     if((manual=tryout(answer, pa)))
     {
         char hum[20];
