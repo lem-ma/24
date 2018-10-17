@@ -50,24 +50,42 @@ char* output(char *dest, char *answ, int mode)
     return dest;
 }
 
-/*Sometimes static inline is not working properly, so use macro*/
-#define solve24_checkorreturn(x) \
-for(int level=0,l=0;config[l];l++)\
-{\
-    if(config[l]<32) tower[level++]=(float)config[l];\
-    else if(config[l]=='+')\
-        tower[level-2]=tower[level-1]+tower[level-2],level--;\
-    else if(config[l]=='-')\
-        tower[level-2]=tower[level-1]-tower[level-2],level--;\
-    else if(config[l]=='*')\
-        tower[level-2]=tower[level-1]*tower[level-2],level--;\
-    else if(config[l]=='/')\
-        tower[level-2]=tower[level-1]/tower[level-2],level--;\
-}\
-if(*tower==24.0f)\
-{\
-    strcpy(dest,config);\
-    return (x);\
+static inline int yield24(char *config)
+{
+    int temp,den[4],num[4];
+    for(int level=0;*config;config++)
+    {
+        if(*config<32) num[level]=(*config),den[level]=1,level++;
+        else if(*config=='+')
+        {
+            num[level-2]*=den[level-1];
+            num[level-2]+=num[level-1]*den[level-2];
+            den[level-2]*=den[level-1];
+            level--;
+        }
+        else if(*config=='-')
+        {
+            num[level-2]*=(-den[level-1]);
+            num[level-2]+=num[level-1]*den[level-2];
+            den[level-2]*=den[level-1];
+            level--;
+        }
+        else if(*config=='*')
+        {
+            num[level-2]*=num[level-1];
+            den[level-2]*=den[level-1];
+            level--;
+        }
+        else if(*config=='/')
+        {
+            temp=num[level-2];
+            num[level-2]=den[level-2]*num[level-1];
+            den[level-2]=temp*den[level-1];
+            level--;
+        }
+    }
+    if((*den==0)||(*num)%(*den)) return 0;
+    else return (*num)/(*den)==24;
 }
 
 int tryout(char *dest, char *token)
@@ -91,7 +109,6 @@ int tryout(char *dest, char *token)
     char ops[]="+-*/";
     char config[8];
     config[7]='\0';
-    float tower[4];
     for(int take=0;take<24;take++)
     {
         config[0]=token[cases[take][3]];
@@ -107,27 +124,47 @@ int tryout(char *dest, char *token)
                     config[3]=token[cases[take][1]];
                     config[4]=token[cases[take][0]];
                     config[5]=ops[j];
-                    solve24_checkorreturn(1);
+                    if(yield24(config))
+                    {
+                        strcpy(dest,config);
+                        return 1;
+                    }
                     config[2]=token[cases[take][1]];
                     config[3]=token[cases[take][0]];
                     config[4]=ops[i];
                     //config[5]=ops[j];
-                    solve24_checkorreturn(2);
+                    if(yield24(config))
+                    {
+                        strcpy(dest,config);
+                        return 2;
+                    }
                     //config[2]=token[cases[take][1]];
                     config[3]=ops[i];
                     config[4]=token[cases[take][0]];
                     //config[5]=ops[j];
-                    solve24_checkorreturn(3);
+                    if(yield24(config))
+                    {
+                        strcpy(dest,config);
+                        return 3;
+                    }
                     //config[2]=token[cases[take][1]];
                     //config[3]=ops[i];
                     config[4]=ops[j];
                     config[5]=token[cases[take][0]];
-                    solve24_checkorreturn(4);
+                    if(yield24(config))
+                    {
+                        strcpy(dest,config);
+                        return 4;
+                    }
                     config[2]=ops[i];
                     config[3]=token[cases[take][1]];
                     //config[4]=ops[j];
                     //config[5]=token[cases[take][0]];
-                    solve24_checkorreturn(5);
+                    if(yield24(config))
+                    {
+                        strcpy(dest,config);
+                        return 5;
+                    }
                 }
             }
         }
