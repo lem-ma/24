@@ -8,7 +8,7 @@
 
 #include "solve24.h"
 
-char* output(char *dest, char *answ, int mode)
+char* solve24_output(char *dest, char *answ, int mode)
 {
     /*                  0   1   2   3   4   5   6
      * ((a b) (c d))    d   c   op  b   a   op  op
@@ -88,7 +88,7 @@ static inline int yield24(char *config)
     else return (*num)/(*den)==24;
 }
 
-int tryout(char *dest, char *token)
+int solve24_tryout(char *dest, char *token)
 {
     /*
      * ((a b) (c d))    d   c   op  b   a   op  op
