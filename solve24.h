@@ -5,7 +5,7 @@
 #ifndef __SOLVE24_H__
 #define __SOLVE24_H__
 
-/* tryout:
+/* solve24_tryout:
  * dest: a character array/pointer with at least 8 sizeof(char) allocated
  * Use to store the (internal) answer
  * token: a charater array with at least 4 sizeof(char) allocated
@@ -14,16 +14,16 @@
  * returns 0 if the given tokens cannot yield 24
  * return an integer between 1 and 5 if it can yield 24.
  */
-int tryout(char *dest, char *token);
+int solve24_tryout(char *dest, char *token);
 
-/* output:
+/* solve24_output:
  * dest: a character array/pointer with at least 20 sizeof(char) allocated
  * if you do not want gcc to complain. Enough with 16 sizeof(char)
- * answ: the internal answer, loaded into the dest argument in tryout
- * mode: the return value (if nonzero) of tryout
+ * answ: the internal answer, loaded into dest in solve24_tryout
+ * mode: the return value (if nonzero) of solve24_tryout
  * returns dest, which has been loaded with
  * the formatted (human-readable) answer
  */
-char* output(char *dest, char *answ, int mode);
+char* solve24_output(char *dest, char *answ, int mode);
 
 #endif
