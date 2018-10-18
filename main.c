@@ -6,13 +6,12 @@
 int main(int argc, char *argv[])
 {
     int manual=1;
-    char pa[4],answer[8];
+    char pa[4],answer[8],hum[20];
     if(argc>4)
     {
         manual=0;
-        for(int i=0;i<4;i++)
-            if((pa[i]=atoi(argv[i+1]))>31||pa[i]<1)
-                puts("Invalid input!"),exit(0);
+        for(int i=0;i<4;i++) if((pa[i]=atoi(argv[i+1]))>31||pa[i]<1)
+            puts("Invalid input!"),exit(0);
     }
     if(manual)
     {
@@ -22,11 +21,8 @@ int main(int argc, char *argv[])
             if(pa[i]<1||pa[i]>31) puts("Invalid input!"),exit(1);
     }
     printf("Inputs: %hhd, %hhd, %hhd, %hhd\n",pa[0],pa[1],pa[2],pa[3]);
-    if((manual=tryout(answer, pa)))
-    {
-        char hum[20];
-        puts(output(hum,answer,manual));
-    }
+    if((manual=solve24_tryout(answer, pa)))
+        puts(solve24_output(hum,answer,manual));
     else puts("No solution!");
     return 0;
 }
