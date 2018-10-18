@@ -1,6 +1,6 @@
 /* Library for solving the 24 game
  * Author: lem-ma (@Github)
- * Version 1.0
+ * Version 1.1
  */
 
 #include <string.h>
